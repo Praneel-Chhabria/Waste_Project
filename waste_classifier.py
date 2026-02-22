@@ -21,6 +21,17 @@ Respond strictly in this JSON format:
 """
 model=genai.GenerativeModel('gemini-2.0-flash')
 
-def classify_waste_image(img): # img for taking pil image 
-    print()
+def classify_waste_image(img):
+    try:
+       
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=[SYSTEM_INSTRUCTIONS, img],
+            config={
+                'response_mime_type': 'application/json', # Forces JSON output
+            }
+        )
+        return response.text
+    except Exception as e:
+        return {"error": f"Failed to process image: {str(e)}"}
     
