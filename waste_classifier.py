@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 api=os.getenv("GOOGLE_API_KEY")
+if not api:
+    raise ValueError("ERROR: API Key not found.")
 client=genai.Client(api_key=api)
 SYSTEM_INSTRUCTIONS = """
 You are a waste management expert. Classify the item in the image into:
@@ -19,8 +21,6 @@ Respond strictly in this JSON format:
   "instruction": "Short tip for disposal"
 }
 """
-model=genai.GenerativeModel('gemini-2.0-flash')
-
 def classify_waste_image(img):
     try:
        
@@ -28,7 +28,7 @@ def classify_waste_image(img):
             model="gemini-2.0-flash",
             contents=[SYSTEM_INSTRUCTIONS, img],
             config={
-                'response_mime_type': 'application/json', # Forces JSON output
+                'response_mime_type': 'application/json',
             }
         )
         return response.text
