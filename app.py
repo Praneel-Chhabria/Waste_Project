@@ -33,7 +33,10 @@ with column_right:
                 backend_response = waste_classifier.classify_waste_image(image)
                 
                 try:
-                    result_data = json.loads(backend_response)
+                    if isinstance(backend_response, dict):
+                        result_data = backend_response
+                    else:
+                        result_data = json.loads(backend_response)
                     
                     detected_item = result_data.get("item", "Unknown")
                     waste_category = result_data.get("category", "Unknown")
@@ -59,4 +62,5 @@ with column_right:
                         
                 except json.JSONDecodeError:
                     st.error("System Error: Failed to parse backend data.")
+
                     st.write("Raw Output:", backend_response)
