@@ -34,7 +34,7 @@ def classify_waste_image(img):
             
         # 2. Use the official types.GenerateContentConfig
         response = client.models.generate_content(
-            model="gemini-3.0-flash",,
+            model="gemini-3.0-flash",
             contents=[SYSTEM_INSTRUCTIONS, img],
             config=types.GenerateContentConfig(
                 response_mime_type="application/json"
