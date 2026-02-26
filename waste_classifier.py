@@ -1,16 +1,12 @@
 import os
 from google import genai
-from google.genai import types # Required for the new SDK
+from google.genai import types  
 from dotenv import load_dotenv
-
 load_dotenv()
 api = os.getenv("GOOGLE_API_KEY")
-
 if not api:
     raise ValueError("ERROR: API Key not found.")
-
 client = genai.Client(api_key=api)
-
 SYSTEM_INSTRUCTIONS = """
 You are a waste management expert. Classify the item in the image into:
 1. Wet Waste (Organic/Biodegradable)
@@ -25,14 +21,10 @@ Respond strictly in this JSON format:
   "instruction": "Short tip for disposal"
 }
 """
-
 def classify_waste_image(img):
     try:
-        # 1. Convert image to RGB format
         if img.mode != "RGB":
             img = img.convert("RGB")
-            
-        # 2. Use the official types.GenerateContentConfig
         response = client.models.generate_content(
             model="gemini-2.5-flash",
             contents=[SYSTEM_INSTRUCTIONS, img],
