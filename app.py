@@ -20,7 +20,6 @@ with column_left:
     
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
-        # Updated to use_container_width to fix the warning in your logs
         st.image(image, caption="Image ready for analysis", use_container_width=True)
 
 with column_right:
@@ -34,16 +33,14 @@ with column_right:
                 backend_response = waste_classifier.classify_waste_image(image)
                 
                 try:
-                    # Handle both dictionary and JSON string formats
                     if isinstance(backend_response, dict):
                         result_data = backend_response
                     else:
                         result_data = json.loads(backend_response)
                     
-                    # --- CRITICAL FIX: Display the hidden error ---
                     if "error" in result_data:
                         st.error(result_data["error"])
-                        st.stop() # Stops the code so it does not print "Unknown"
+                        st.stop()
                     
                     detected_item = result_data.get("item", "Unknown")
                     waste_category = result_data.get("category", "Unknown")
@@ -70,3 +67,4 @@ with column_right:
                 except Exception as e:
                     st.error(f"System Error: {str(e)}")
                     st.write("Raw Output:", backend_response)
+
