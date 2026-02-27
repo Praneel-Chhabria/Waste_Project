@@ -1,1 +1,17 @@
-About program:
+♻️ AI Waste Classifier:
+
+An AI-powered web application that classifies waste into different categories such as recyclable, organic, and landfill using machine learning and computer vision.
+This project aims to promote proper waste segregation and environmental sustainability through intelligent automation.
+
+🚀 Features:
+
+📷 Upload an image of waste
+🧠 AI-based image classification
+♻️ Categorizes waste into:
+1) Recyclable
+2) Wet waste 
+3) Hazardous
+4) Dry waste
+
+⚡ Fast and simple user interface
+🌍 Environment-friendly solution
